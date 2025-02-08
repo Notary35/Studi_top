@@ -31,3 +31,35 @@ git init
 git config --global user.name "name"
 git config --global user.email "email"
 """
+# Функция для проверки, является ли число палиндромом
+def is_palindrome(num):
+    # Преобразуем число в строку для удобства сравнения
+    str_num = str(num)
+    # Получаем реверс (обратный порядок) строки
+    reversed_num = str_num[::-1]
+    
+    # Сравниваем оригинальную строку с реверсированной
+    if str_num == reversed_num:
+        return True  # Если совпадают, возвращаем True (палиндром)
+    else:
+        return False  # Иначе возвращаем False (не палиндром)
+
+# Запрос числа у пользователя
+user_input = input("Введите число для проверки: ")
+
+# Проверка, является ли введенное значение числом
+if user_input.isdigit():
+    number = int(user_input)  # Преобразуем входное значение в целое число
+    # Вызываем функцию и выводим результат
+    if is_palindrome(number):
+        print(f"{number} является палиндромом.")
+    else:
+        print(f"{number} не является палиндромом.")
+else:
+    print("Пожалуйста, введите корректное целое число.")
+
+pip = "Что то добавил я"
+
+"""
+1234567
+"""
