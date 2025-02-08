@@ -56,3 +56,78 @@ new_dict = {}
 new_dict.update(default)
 new_dict.update(custom)
 print(f"Итоговая конфигурация: {new_dict}")
+
+# Создадим функцию для **kwargs:
+
+
+# 1:
+def print_user_info(**kwargs):
+    print(type(kwargs))  # <class 'dict'>
+    for key, value in kwargs.items():
+        print(f"Ключ: {key}, Значение: {value}")
+
+
+print_user_info(name="Иван", age=25)
+
+# 2:
+user_info = {"name": "Эрик", "age": 30, "city": "Лиссабон"}
+print_user_info(**user_info)
+print_user_info(hobbies=["чтение", "путешествия", "программирование"])
+
+сonfig_open_ai = {
+    "model": "gpt-3.5-turbo",
+    "temperature": 0.7,
+    "max_tokens": 50,
+    "top_p": 1.0,
+    "frequency_penalty": 0.0,
+    "presence_penalty": 0.0,
+    "api_key": "sk-...",
+    "endpoint": "https://api.openai.com/v1/chat/completions",
+}
+
+
+def open_ai_request(**params):
+    # Тут вы можете разобрать словарь и добыть нужное
+    pass
+
+
+def open_ai_request2(
+    model: str,
+    temperature: float,
+    max_tokens: int,
+    top_p: float,
+    frequency_penalty: float,
+    presence_penalty: float,
+    api_key: str,
+    endpoint: str,
+):
+    # Этот вариант лучше, т.к. он более читаемый и удобный
+    pass
+
+
+open_ai_request2(**сonfig_open_ai)
+
+open_ai_request2(
+    model="gpt-3.5-turbo",
+    temperature=0.7,
+    max_tokens=50,
+    top_p=1.0,
+    frequency_penalty=0.0,
+    presence_penalty=0.0,
+    api_key="sk-...",
+    endpoint="https://api.openai.com/v1/chat/completions",
+)
+
+user_info = {"name": "Эрик", "age": 30, "city": "Лиссабон"}
+
+
+def print_user_info2(name, age, city):
+    print(f"Имя: {name}, Возраст: {age}, Город: {city}")
+
+
+print_user_info2(**user_info)
+
+config = {"sep": " ", "end": "\n"}
+
+print("Hello", "World", **config)
+
