@@ -24,3 +24,35 @@ python функции. **kwargs. Модули. Библиотеки plyer и req
     - Получение данных через requests
     - Структурирование кода в модули
 """
+
+# Kwargs
+
+# Простой пример разбора словаря:
+
+# Создаем словарь с данными пользователя, где 'name' и 'age' - ключи, а 'Иван' и 25 - значения
+user = {"name": "Иван", "age": 25}
+
+# Используем метод values() для получения значений и распаковываем их в переменные name и age
+name, age = user.values()
+
+# Выводим результат через f-строку, где переменные подставляются в фигурных скобках
+print(f"Имя: {name}, возраст: {age}")
+
+# Пример посложенее - распаковка вложенных словарей
+student = {"info": {"name": "Мария", "age": 20}, "grades": {"math": 5, "physics": 4}}
+
+info, grades = student.values()
+print(f"Информация:  {info}")
+print(f"Оценки: {grades}")
+
+# Распаковка с использованием **kwargs
+default = {"name": "Ваня", "age": 25}
+custom = {"full_name": "Иван", "Birthday": "15.01.2000"}
+config = {*default, *custom}
+print(f"Итоговая конфигурация: {config}")
+
+# Как это было бы через Update
+new_dict = {}
+new_dict.update(default)
+new_dict.update(custom)
+print(f"Итоговая конфигурация: {new_dict}")
