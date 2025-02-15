@@ -52,7 +52,7 @@ txt_file = "lesson14.txt"
 # file.close()
 
 # ОТкрытие файла для чтения
-file = open(txt_file, "r", encoding="utf-8")
+# file = open(txt_file, "r", encoding="utf-8")
 
 # Получаем список строк
 # lines = file.readlines()
@@ -61,15 +61,24 @@ file = open(txt_file, "r", encoding="utf-8")
 # print(lines)
 
 # Получим одну строку
-line = file.readline()
-print(line, end="")
+# line = file.readline()
+# print(line, end="")
 
-line = file.readline()
-print(line.strip())
+# line = file.readline()
+# print(line.strip())
 
-line = file.readline()
-print(line.strip())
+# line = file.readline()
+# print(line.strip())
 
 # Открытие файла для перезаписи
-with open(txt_file, "w", encoding="utf-8") as file:
-    file.write("Hello, world_1!\nHello, world_2!\nHello, world_3!\nHello, world_4!\n")
+# with open(txt_file, "w", encoding="utf-8") as file:
+#     file.write("Hello, world_1!\nHello, world_2!\nHello, world_3!\nHello, world_4!\n")
+
+# Закрытие файла
+# file.close()
+
+# Контекстный менеджер with
+with open(txt_file, "a", encoding="utf-8") as file:
+    lines = file.readlines()
+
+print(lines)
