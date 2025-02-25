@@ -40,7 +40,7 @@ Python: Разбор HW. Модули, импорты и работа с фай�
 # +
 
 # путь к файлу относительно корня проекта
-# txt_file = "lesson14.txt"
+txt_file = "lesson14.txt"
 
 # открытие файла для дозаписи
 # file = open(txt_file, "a", encoding="utf-8")
@@ -78,26 +78,25 @@ Python: Разбор HW. Модули, импорты и работа с фай�
 # file.close()
 
 # Контекстный менеджер with
-# with open(txt_file, "a", encoding="utf-8") as file:
-#     lines = file.readlines()
+with open(txt_file, "r", encoding="utf-8") as file:
+    lines = file.readlines()
 
-# print(lines)
+print(lines)
 
-"""
-practice - практика
-Напишите функцию
-def write_to_file(file_name: str, *data: str, mode: str = "a", encoding: str = "utf-8") -> None:
-    ...
 
-которая принимает название файла, данные для записи и режим работы с файлом.
+# practice - практика
+# Напишите функцию
+# def write_to_file(file_name: str, *data: str, mode: str = "a", encoding: str = "utf-8") -> None:
+#     ...
 
-data - коллеция строк, которые нужно записать в файл
-Пишите это в цикле for line in data:
-"""
+# которая принимает название файла, данные для записи и режим работы с файлом.
+
+# data - коллеция строк, которые нужно записать в файл
+# Пишите это в цикле for line in data:
 
 
 def write_to_file(
-    file_name: str, *data: str, mode: str = "w", encoding: str = "utf-8"
+    file_name: str, *data: str, mode: str = "a", encoding: str = "utf-8"
 ) -> None:
     with open(file_name, mode, encoding=encoding) as file:
         for line in data:
