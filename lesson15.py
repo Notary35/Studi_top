@@ -35,182 +35,147 @@ Python: Работа с форматами данных JSON, CSV, YAML. Уро�
     - Конвертер данных между форматами
 """
 
-# JSON - (JavaScript Object Notation)
-# JSON - это текстовый формат данных, который используется для представления структурных данных.
-# JSON поддерживает следующие типы данных:
-# - числа
-# - строки
-# - логические значения (true, false)
-# - массивы
-# - объекты
-# - null
-
-# Python имеет встроенный модуль json, который позволяет работать с JSON-данными.
-# Модуль json предоставляет следующие функции:
-# - json.dumps() - конвертирует объект Python в строку JSON
-# - json.loads() - конвертирует строку JSON в объект Python
-# - json.dump() - записывает объект Python в файл JSON
-# - json.load() - читает объект Python из файла JSON
-
-
-import json
 import csv
 import pprint
 
-
-# json_string = """[
-#     "Монин Владимир Александрович",
-#     "Артемьев Алексей Львович",
-#     "Багаутдинов Ринат Дмиитриевич",
-#     "Балагуров Артем Алексеевич",
-#     "Бибиков Кирилл Сергеевич",
-#     "Крылов Илья Сергеевич",
-#     "Кряжев Руслан Анатольевич",
-#     "Кузнецов Иван Станиславович",
-#     "Лапицкая Наталья Владимировна",
-#     "Морозов Илья Иванович",
-#     "Мустяцэ Иван Иванович",
-#     "Никулина Екатерина Александровна"
-# ]
-# """
+# CSV (Comma-Separated Values)
+# CSV - это текстовый формат данных, который используется для представления табличных данных.
 
 
-# python_data = json.loads(json_string)
-# print(type(python_data))
-# pprint.pprint(python_data, indent=4)
+students_list = [
+    ["lastname", "firstname", "middlename"],
+    ["Монин", "Владимир", "Александрович"],
+    ["Артемьев", "Алексей", "Львович"],
+    ["Багаутдинов", "Ринат", "Дмитриевич"],
+    ["Балагуров", "Артем", "Алексеевич"],
+    ["Бибиков", "Кирилл", "Сергеевич"],
+    ["Крылов", "Илья", "Сергеевич"],
+    ["Кряжев", "Руслан", "Анатольевич"],
+    ["Кузнецов", "Иван", "Станиславович"],
+    ["Лапицкая", "Наталья", "Владимировна"],
+    ["Мазуренко", "Кристина", "Владимировна"],
+    ["Морозов", "Илья", "Валерьевич"],
+    ["Мустяцэ", "Иван", "Иванович"],
+    ["Никулина", "Екатерина", "Александровна"],
+]
 
-# Обратная операция
-# json_string = json.dumps(python_data, ensure_ascii=False, indent=4)
-# print(type(json_string))
-# print(json_string)
+# with open('lesson15.csv', 'w', encoding='utf-8-sig') as file:
+#     writer = csv.writer(file, delimiter=';', lineterminator='\n')
+#     writer.writerows(students_list)
 
+# writerows() - записывает список списков в файл
+# writerow - записывает строку
+# utf-8-sig - кодировка для excel
+# delimiter=';' - разделитель полей (Для Excel)
+# lineterminator='\n' - символ переноса строки
 
-# Запись в файл
-# students.json - файл
-# w - режим записи
-# encoding="utf-8" - кодировка
-# as file - переменная, которая будет содержать файл
-# json.dump - метод для записи в файл
-# ensure_ascii=False - не конвертировать в ASCII *при работе с русским языком
-# with open("students.json", "w", encoding="utf-8") as file:
-#     json.dump(python_data, file, ensure_ascii=False, indent=4)
+# Дозапись в CSV
 
-# Чтение из файла
-# r - режим чтения
-# encoding="utf-8" - кодировка
+new_student = ["Папилов", "Сергей", "Вадимович"]
 
-# with open("students.json", "r", encoding="utf-8") as file:
-#     python_data = json.load(file)
+# students_list.append(new_student)
 
+with open("lesson15.csv", "a", encoding="utf-8-sig") as file:
+    writer = csv.writer(file, delimiter=";", lineterminator="\n")
+    writer.writerow(new_student)
 
-# print(type(python_data))
-# pprint.pprint(python_data, indent=4)
+# Получим данные из CSV обратно
 
-# Дозапись в файл
-# Использование флага "a" для дозаписи в JSON массивах не поддерживается, т.к. он не умеет дозаписывать в конец, а создает новый массив тем самым нарушает структуру данных JSON.
-# Заместо этого мы разберём весь массив и дозапишем его в новый обновленный массив.
+with open("lesson15.csv", "r", encoding="utf-8-sig") as file:
+    reader = csv.reader(file, delimiter=";")
+    students_list = list(reader)
 
-# Для этого прочитаем файл, добавим новый элемент и запишем обратно в файл:
+pprint.pprint(students_list, indent=4)
 
-# with open("students.json", "r", encoding="utf-8") as file:
-#     python_data = json.load(file)
+# with open('lesson15.csv', 'a', encoding='utf-8-sig') as file:
+#     writer = csv.DictWriter(file, fieldnames=['Папилов', 'Сергей', 'Вадимович'], delimiter=';')
+#     writer.writerows(students_list)
 
-# if "Папилов Сергей Вадимович" not in python_data:
-#     python_data.append("Папилов Сергей Вадимович")
-#     # python_data.remove("Папилов Сергей Вадимович") - удаление элемента
+students_dict = [
+    {"lastname": "Монин", "firstname": "Владимир", "middlename": "Александрович"},
+    {"lastname": "Артемьев", "firstname": "Алексей", "middlename": "Львович"},
+    {"lastname": "Багаутдинов", "firstname": "Ринат", "middlename": "Дмитриевич"},
+    {"lastname": "Балагуров", "firstname": "Артем", "middlename": "Алексеевич"},
+    {"lastname": "Бибиков", "firstname": "Кирилл", "middlename": "Сергеевич"},
+    {"lastname": "Крылов", "firstname": "Илья", "middlename": "Сергеевич"},
+    {"lastname": "Кряжев", "firstname": "Руслан", "middlename": "Анатольевич"},
+    {"lastname": "Кузнецов", "firstname": "Иван", "middlename": "Станиславович"},
+    {"lastname": "Лапицкая", "firstname": "Наталья", "middlename": "Владимировна"},
+    {"lastname": "Мазуренко", "firstname": "Кристина", "middlename": "Владимировна"},
+    {"lastname": "Морозов", "firstname": "Илья", "middlename": "Валерьевич"},
+    {"lastname": "Мустяцэ", "firstname": "Иван", "middlename": "Иванович"},
+    {"lastname": "Никулина", "firstname": "Екатерина", "middlename": "Александровна"},
+]
 
-# with open("students.json", "w", encoding="utf-8") as file:
-#     json.dump(python_data, file, ensure_ascii=False, indent=4)
-
-# print(type(python_data))
-# print(json.dumps(python_data, ensure_ascii=False, indent=4))
-
-
-def append_json(
-    file_name: str, *data: str, indent: int = 4, encoding: str = "utf-8"
-) -> None:
-
-    #     """
-    #     Функция для добавления данных в JSON-файл. Работает с JSON массивами.
-    #     :param file_name: имя JSON-файла
-    #     :param data: данные, которые нужно добавить в массив
-    #     :param indent: количество пробелов для отступа
-    #     :param encoding: кодировка файла
-    #     :return: None
-    #     """
-    with open(file_name, "r", encoding="utf-8") as file:
-        python_data = json.load(file)
-
-    if not isinstance(python_data, list):
-        raise TypeError("JSON-файл должен содержать список")
-
-    python_data.extend(data)
-
-    with open(file_name, "w", encoding=encoding) as file:
-        json.dump(python_data, file, ensure_ascii=False, indent=indent)
-
-    print(isinstance(python_data, list))
+pprint.pprint(students_dict, indent=4, width=120, sort_dicts=False)
 
 
-# Читаем текущий список из JSON
-with open("students.json", "r", encoding="utf-8") as file:
-    current_students = json.load(file)
+# Запись списка словарей в CSV
+# fieldnames - названия для столбцов
+# .writeheader() - записывает заголовки
 
-user_input = input("Введите список студентов через запятую: ")
+# with open("students.csv", "w", encoding="utf-8-sig") as file:
+#     writer = csv.DictWriter(
+#         file, fieldnames=students_dict[0].keys(), delimiter=";", lineterminator="\n"
+#     )
+#     writer.writeheader()
+#     writer.writerows(students_dict)
 
-if user_input:
-    new_students = user_input.strip().title().split(", ")
-else:
-    new_students = (
-        []
-    )  # Данная запись проверяет, что список user_input не пустой (всё равно что if len(user_input > 0) или if user_input != []):
+new_student = {"lastname": "Папилов", "firstname": "Сергей", "middlename": "Вадимович"}
 
-# Преобразуем списки во множества и находим разницу, функцией "list" преобразуем обратно в список
-students_to_add = list(set(new_students) - set(current_students))
+# Код дозаписи
+with open("students.csv", "a", encoding="utf-8-sig") as file:
+    writer = csv.DictWriter(
+        file, fieldnames=new_student.keys(), delimiter=";", lineterminator="\n"
+    )
+    writer.writerow(new_student)
 
-append_json("students.json", *students_to_add)
+# Прочитаем обратно
 
-with open("students.json", "r", encoding="utf-8") as file:
-    current_students = json.load(file)
+with open("students.csv", "r", encoding="utf-8-sig") as file:
+    reader = csv.DictReader(file, delimiter=";")
+    students_dict = list(reader)
 
+pprint.pprint(students_dict, indent=4, width=120, sort_dicts=False)
 
-print(type(current_students))
-print(json.dumps(current_students, ensure_ascii=False, indent=4))
+# pip install tabulate
 
+from tabulate import tabulate
 
+# Отобразим список словарей в виде таблицы
 
+print(tabulate(students_dict, headers="keys", tablefmt="fancy_grid"))
 
-def remove_json(file_name: str, *data: str, indent: int = 4, encoding: str = "utf-8") -> None:
-    with open(file_name, "r", encoding="utf-8") as file:
-        python_data = json.load(file)
+print(tabulate(students_dict, headers="firstrow", tablefmt="grid"))
 
-    if not isinstance(python_data, list):
-        raise TypeError("JSON-файл должен содержать список")
+# Сначала получаем HTML таблицу из tabulate
+html_table = tabulate(students_dict, headers="keys", tablefmt="html")
 
-    # Оставляем только те элементы, которых нет в data
-    python_data = list(set(python_data) - set(data))
+# Модифицируем таблицу, добавляя нужные классы Bootstrap 5
+# Заменяем стандартный тег table на table с классами BS5
+styled_table = html_table.replace(
+    '<table>', 
+    '<table class="table table-striped table-hover">'
+)
 
-    # Сортируем список по фамилии (первое слово в строке)
-    python_data.sort(key=lambda x: x.split(" ")[0])
+html_template = f"""
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Список студентов</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container mt-5">
+            <h1 class="mb-4">Список студентов</h1>
+            {styled_table}
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
+"""
 
-    with open(file_name, "w", encoding=encoding) as file:
-        json.dump(python_data, file, ensure_ascii=False, indent=indent)
-
-# Чтение текущего списка
-with open("students.json", "r", encoding="utf-8") as file:
-    current_students = json.load(file)
-
-user_input = input("Введите список студентов, которых нужно удалить, через запятую: ")
-
-if user_input:
-    students_to_remove = user_input.strip().title().split(", ")
-else:
-    students_to_remove = []
-
-remove_json("students.json", *students_to_remove)# print(json.dumps(current_students, ensure_ascii=False, indent=4))
-
-with open("students.json", "r", encoding="utf-8") as file:
-    current_students = json.load(file)
-
-print(type(current_students))
-pprint.pprint(current_students, indent=4)
+with open("students.html", "w", encoding="utf-8") as file:
+    file.write(html_template)
