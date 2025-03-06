@@ -59,9 +59,9 @@ students_list = [
     ["Никулина", "Екатерина", "Александровна"],
 ]
 
-# with open('lesson15.csv', 'w', encoding='utf-8-sig') as file:
-#     writer = csv.writer(file, delimiter=';', lineterminator='\n')
-#     writer.writerows(students_list)
+with open('lesson15.csv', 'w', encoding='utf-8-sig') as file:
+    writer = csv.writer(file, delimiter=';', lineterminator='\n')
+    writer.writerows(students_list)
 
 # writerows() - записывает список списков в файл
 # writerow - записывает строку
