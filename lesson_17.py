@@ -3,36 +3,63 @@ Lesson 17
 11.05.2025
 Инкапсуляция. Приватные атрибуты и методы.
 """
-
+# pylint: disable=all
 
 class Car:
+    """
+    Эксперементальный класс автомобиль
+    для изучения приватных и защищённых методов и атрибутов.
+    """
     def __init__(self, color: str, mark: str, serial_number: int):
         self.color = color
         self.mark = mark
         self.__serial_number = serial_number
+        self.__engine_state: bool = False
     
-    def __str__(self) -> str:
+    def __str__(self):
         # return f"Цвет: {self.color}\nМарка: {self.mark}\nСерийный номер: {self.serial_number}"
         return f"Автомобиль: {self.mark}\nСерийный номер: {self.__serial_number}\nЦвет: {self.color}"
+    
+    def __make_noise(self):
+        print(f"Звук работы двигателя {self.mark}")
 
-# pylint: disable=all
+    def start_engine(self):
+        self.__engine_state = True
+        self.__make_noise()
+        print(f'Состояние двигателя: {self.__engine_state}')
+        
+    def stop_engine(self):
+        self.__engine_state = False
+        print(f'Состояние двигателя: {self.__engine_state}')
+        
+    def move(self):
+        if self.__engine_state:
+            print("Автомобиль едет")
+            self.__make_noise()
+        else:
+            print("Двигатель не запущен")
+        
+    def stop(self):
+        print("Автомобиль остановился")
 
-"""
-Два уровня сокрытия:
-_ - защищенный (protected) - условно нет доступа из вне. Есть доступ у наследников
-__ - приватный (private) - сложный доступ из вне. Нет доступа у наследников
-"""
+    
+# Создаём экземпляр класса автомобиля
+car = Car('red', 'BMW', 555)
 
-car = Car("Желтый", "Audi", 999)
-# print(car.__serial_number)
-print(car.__dict__)
-print()
-# print({'color': car.__dict__['color']})
-print(car._Car__serial_number)
-print()
-car._Car__serial_number = 333
-print(car)
-print()
-car._serial_number = 111
-print(car.__dict__)
-print()
+# Попробуем поехать
+car.move()
+
+# Запустим двигатель
+car.start_engine()
+
+# Поехали
+car.move()
+
+# Остановимся
+car.stop()
+
+# Заглушим двигатель
+car.stop_engine()
+
+# Попробуем издать звук двигателя
+# car.__make_noise() # AttributeError: 'Car' object has no attribute '__make_noise'. Did you mean: '_Car__make_noise'?
