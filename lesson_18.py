@@ -97,21 +97,38 @@ class WeatherRequest:
         weather_dict = self.get_clear_weather_data(city)
         return self.get_weather_string(weather_dict)
     
-    def weather_notify(self, city: str):
-        weather_data = self.get_clear_weather_data(city)
+    # def weather_notify(self, city: str):
+    #     weather_data = self.get_clear_weather_data(city)
+    #     notification.notify(
+    #         title = f"Погода в {city}",
+    #         message = f"Температура: {weather_data['temp']}°C\nОщущается как: {weather_data['feels_like']}°C\nОписание: {weather_data['description']}",
+    #         app_name = "Погода",
+    #         app_icon = None,
+    #         timeout = 0,
+    #         toast = True,
+    #     )
+
+# weather = WeatherRequest(API_KEY)
+# result = weather(CITY)
+# print(result)
+# weather.weather_notify(CITY)
+
+class Notification:
+
+    @staticmethod
+    def notification(title: str, message: str):
         notification.notify(
-            title = f"Погода в {city}",
-            message = f"Температура: {weather_data['temp']}°C\nОщущается как: {weather_data['feels_like']}°C\nОписание: {weather_data['description']}",
+            title = title,
+            message = message,
             app_name = "Погода",
             app_icon = None,
             timeout = 0,
-            toast = True,
+            toast = True
         )
-
-weather = WeatherRequest(API_KEY)
-result = weather(CITY)
-print(result)
-weather.weather_notify(CITY)
+        
+    def __call__(self, title: str, message: str):
+        self.notification(title, message)
+        
 
 
 # # Temp
