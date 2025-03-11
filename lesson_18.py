@@ -1,10 +1,19 @@
+"""
+Lesson 18
+12.01.2025
+
+Python: ООП. Ч3. Инкапсуляция. Приватные методы и атрибуты. Урок: 18
+- Практика. Пишем класс для работы с погодным API
+"""
+
 import requests
 from plyer import notification
-# Просто сделаем запрос без функций
-# pylint: disable=all
+from requests.exceptions import RequestException
+from json.decoder import JSONDecodeError
+# pip innstall plyer requests
 
-CITY = input('Введите город: ')
-API_KEY = "23496c2a58b99648af590ee8a29c5348"
+CITY = "Усть-Каменогорск"
+API_KEY = "23496c2a58b99648af590ee8a29c5348-аааа"
 UNITS = "metric"
 LANGUAGE = "ru"
 
@@ -18,20 +27,23 @@ LANGUAGE = "ru"
 # Получим описание и температуру, и ощущается как
 # weather_dict = response.json()
 
+class WeatherRequestError(Exception):
+    """Кастомное исключение для ошибок погодного API"""
+    pass
+
 class WeatherRequest:
     def __init__(self, api_key: str, units: str = "metric", language: str = "ru"):
         self.api_key = api_key
         self.units = units
         self.language = language
-        self.__url: str = None
-        self.__response: dict = None
-    
-        
-    def __get_request_url(self, city: str) -> str:
+        self.__url: str = ''
+        self.__response: dict = {}
+
+    def __get_request_url(self, city: str):
         """
         Метод
-        :param: city: Название города
-        :return: None
+        :param:
+        :return:
         """
         self.__url = fr'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={self.api_key}&units={self.units}&lang={self.language}'
         
@@ -40,11 +52,18 @@ class WeatherRequest:
         Метод формирует URL и делает запрос к погодному API
         :param city: Название города
         :return: None
+        :raises: WeatherRequestError
         """
-        self.__get_request_url(city)
-        response = requests.get(self.__url)
-        self.__response = response.json()
-        
+        try:
+            self.__get_request_url(city)
+            response = requests.get(self.__url, timeout=5)  # добавляем timeout
+            response.raise_for_status()  # проверяем статус ответа
+            self.__response = response.json()
+        except RequestException as e:
+            raise WeatherRequestError(f"Ошибка при запросе погоды: {str(e)}")
+        except JSONDecodeError:
+            raise WeatherRequestError("Получен некорректный ответ от сервера")
+
     def get_clear_weather_data(self, city: str):
         """
         Метод очищает данные полученные из погодного API и упаковывает их в словарь,
@@ -53,12 +72,14 @@ class WeatherRequest:
         :return: Словарь с очищенными данными
         """
         self.get_weather(city)
-        result = {}
-        result["temp"] = self.__response["main"]["temp"]
-        result["feels_like"] = self.__response['main']['feels_like']
-        result["description"] = self.__response['weather'][0]['description']
-        
-        return result
+
+        result_dict = {}
+
+        result_dict["temp"] = self.__response["main"]["temp"]
+        result_dict["feels_like"] = self.__response['main']['feels_like']
+        result_dict["description"] = self.__response['weather'][0]['description']
+
+        return result_dict
     
     def get_weather_string(self, weather_dict: dict) -> str:
         """
@@ -66,14 +87,15 @@ class WeatherRequest:
         :param weather_dict: Словарь с данными о погоде
         :return: Строка с описанием погоды
         """
-        temp = weather_dict["temp"]
-        feels_like = weather_dict["feels_like"]
-        description = weather_dict["description"]
-        return f"Температура: {temp}°C\nОщущается как: {feels_like}°C\nОписание: {description}"
+        temp = weather_dict['temp']
+        feels_like = weather_dict['feels_like']
+        description = weather_dict['description']
+
+        return f'Температура: {temp}°C\nОщущается как: {feels_like}°C\nОписание: {description}'
     
-    def __call__ (self, city: str) -> str:
-        weather_data = self.get_clear_weather_data(city)
-        return self.get_weather_string(weather_data)
+    def __call__(self, city: str)-> str:
+        weather_dict = self.get_clear_weather_data(city)
+        return self.get_weather_string(weather_dict)
     
     def weather_notify(self, city: str):
         weather_data = self.get_clear_weather_data(city)
