@@ -12,8 +12,8 @@ from requests.exceptions import RequestException
 from json.decoder import JSONDecodeError
 # pip innstall plyer requests
 
-CITY = "Усть-Каменогорск"
-API_KEY = "23496c2a58b99648af590ee8a29c5348-аааа"
+CITY = input("Введите название города: ")
+API_KEY = "23496c2a58b99648af590ee8a29c5348"
 UNITS = "metric"
 LANGUAGE = "ru"
 
@@ -129,8 +129,21 @@ class Notification:
     def __call__(self, title: str, message: str):
         self.notification(title, message)
         
+class WeatherFacade:
+    def __init__(self, api_key: str, units: str = "metric", language: str = "ru"):
+        self.weather = WeatherRequest(api_key, units, language)
+        self.notification = Notification()
 
-
+    def __call__(self, city: str):
+        weather_dict = self.weather.get_clear_weather_data(city)
+        title = f"Погода в {city}"
+        message = self.weather.get_weather_string(weather_dict)
+        self.notification(title, message)
+        
+if __name__ == '__main__':
+    weather = WeatherFacade(API_KEY)
+    weather(CITY)
+    
 # # Temp
 # temp = weather_dict['main']['temp']
 # # Ощущается как
