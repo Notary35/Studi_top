@@ -19,14 +19,14 @@ class Animal:
         return f"Животное: {self._name}"
         
     def voice(self) -> None:
-        print(f"Животное издаёт звук: {self.sound}")
+        return f"Животное издаёт звук: {self.sound}"
         
-
-        
-
 class Dog(Animal):
     def voice(self) -> None:
-        print(f"Собака {self._name} говорит: {self.sound}")
+        # animal_voice = Animal.voice(self)
+        animal_voice = super().voice()
+        animal_voice += "\nЧёрт"
+        return animal_voice
     # pass
 
 dog = Dog('Шарик', 'Гав - гав')
@@ -37,5 +37,5 @@ print()
 print(type(dog))
 # <class '__main__.Dog'>
 print()
-dog.voice()
+print(dog.voice())
 print()
