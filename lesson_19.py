@@ -10,15 +10,30 @@ Lesson 19
 - Цепочка наследования классов с применением **kwargs
 """
 class Animal:
-    pass
+    def __init__ (self, name: str, sound: str):
+        self.name = name
+        self.sound = sound
+        print("Инициализатор родителя")
+        
+    def __str__(self):
+        return f"Животное: {self.name}"
+        
+    def voice(self) -> None:
+        print(f"Животное издаёт звук: {self.sound}")
+        pass
+
+        
 
 class Dog(Animal):
     pass
 
-dog = Dog()
+dog = Dog('Шарик', 'Гав - гав')
 # print(isinstance(dog, Animal))
 print(dog)
 # <__main__.Dog object at 0x000001D8B5276A50>
 print()
 print(type(dog))
 # <class '__main__.Dog'>
+print()
+dog.voice()
+print()
