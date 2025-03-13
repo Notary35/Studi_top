@@ -11,21 +11,23 @@ Lesson 19
 """
 class Animal:
     def __init__ (self, name: str, sound: str):
-        self.name = name
+        self._name = name
         self.sound = sound
-        print("Инициализатор родителя")
+        print("Инициализатор родителя\n")
         
     def __str__(self):
-        return f"Животное: {self.name}"
+        return f"Животное: {self._name}"
         
     def voice(self) -> None:
         print(f"Животное издаёт звук: {self.sound}")
-        pass
+        
 
         
 
 class Dog(Animal):
-    pass
+    def voice(self) -> None:
+        print(f"Собака {self._name} говорит: {self.sound}")
+    # pass
 
 dog = Dog('Шарик', 'Гав - гав')
 # print(isinstance(dog, Animal))
