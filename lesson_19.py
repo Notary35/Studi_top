@@ -9,40 +9,40 @@ Lesson 19
 - Цепочка наследования классов
 - Цепочка наследования классов с применением **kwargs
 """
-class Animal:
-    def __init__ (self, name: str, sound: str):
-        self._name = name
-        self.sound = sound
-        print("Инициализатор родительского класса\n")
-        
-    def __str__(self):
-        return f"Животное: {self._name}\n"
-        
-    def voice(self) -> None:
-        return f"Животное издаёт звук: {self.sound}\n"
-        
-class Dog(Animal):
-    def __init__(self, name: str, sound: str, breed: str):
-        # Animal.__init__(self, name, sound)
-        super().__init__(name, sound)
-        self.breed = breed
-        print("Инициализатор дочернего класса\n")
-        
-        
-    def voice(self) -> None:
-        # animal_voice = Animal.voice(self)
-        animal_voice = super().voice(), "\n"
-        animal_voice += "\n"
-        return animal_voice
-    # pass
+# pylint: disable=all
 
-dog = Dog('Шарик', 'Гав-гав', 'Стафф')
-# print(isinstance(dog, Animal))
-print(dog)
-# <__main__.Dog object at 0x000001D8B5276A50>
+from abc import ABC, abstractmethod
+class AbstracDocument(ABC):
+    def __init__(self, file_path: str) -> None:
+        self.file_path = file_path
 
-print(type(dog))
-print()
-# <class '__main__.Dog'>
-
-print(dog.voice())
+    @abstractmethod    
+    def open(self) -> None:
+        pass
+    
+    @abstractmethod
+    def read(self) -> None:
+        pass
+    
+    @abstractmethod
+    def append(self) -> None:
+        pass
+    
+    @abstractmethod
+    def write(self) -> None:
+        pass
+    
+class MarkdownDocument(AbstracDocument):
+    def __init__(self, file_path: str) -> None:
+        super().__init__(file_path)
+        
+    def open(self) -> None:
+        pass
+    def read(self) -> None:
+        pass
+    def append(self) -> None:
+        pass
+    def write(self) -> None:
+        pass
+        
+md_file = MarkdownDocument("file.md")
