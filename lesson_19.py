@@ -13,29 +13,36 @@ class Animal:
     def __init__ (self, name: str, sound: str):
         self._name = name
         self.sound = sound
-        print("Инициализатор родителя\n")
+        print("Инициализатор родительского класса\n")
         
     def __str__(self):
-        return f"Животное: {self._name}"
+        return f"Животное: {self._name}\n"
         
     def voice(self) -> None:
-        return f"Животное издаёт звук: {self.sound}"
+        return f"Животное издаёт звук: {self.sound}\n"
         
 class Dog(Animal):
+    def __init__(self, name: str, sound: str, breed: str):
+        # Animal.__init__(self, name, sound)
+        super().__init__(name, sound)
+        self.breed = breed
+        print("Инициализатор дочернего класса\n")
+        
+        
     def voice(self) -> None:
         # animal_voice = Animal.voice(self)
-        animal_voice = super().voice()
-        animal_voice += "\nЧёрт"
+        animal_voice = super().voice(), "\n"
+        animal_voice += "\n"
         return animal_voice
     # pass
 
-dog = Dog('Шарик', 'Гав - гав')
+dog = Dog('Шарик', 'Гав-гав', 'Стафф')
 # print(isinstance(dog, Animal))
 print(dog)
 # <__main__.Dog object at 0x000001D8B5276A50>
-print()
+
 print(type(dog))
+print()
 # <class '__main__.Dog'>
-print()
+
 print(dog.voice())
-print()
