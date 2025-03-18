@@ -9,39 +9,37 @@
 # Альтернативный вариант
 # Много минусов. 
 
+        
 class A:
-    def method_a(self) -> None:
-        print("Метод класса A")
-        print()
+    def __init__(self, attr_a) -> None:
+        print("Инициализация класса A")
+        self.attr_a = attr_a
+
+    def method_a(self):
+        print(f"Method A: {self.attr_a} ")
+
 
 class B:
-    def method_a(self) -> None:
-        print("Метод A в классе B")
-        print()
+    def __init__(self, attr_b) -> None:
+        print("Инициализация класса B")
+        self.attr_b = attr_b
+
+    def method_b(self):
+        print(f"Method B: {self.attr_b}")
+
+
 class C(A, B):
-    pass
+    def __init__(self, attr_a, attr_b, attr_c) -> None:
+        A.__init__(self, attr_a)
+        B.__init__(self, attr_b)
+        print("Инициализация класса C")
+        self.attr_c = attr_c
 
-c = C()
+    def method_c(self):
+        print(f"Method C: {self.attr_c}")
+
+
+c = C(1, 2, 3)
 c.method_a()
-
-print(C.mro()) 
-        
-# class A:
-#     def __init__(self, attr_a: str) -> None:
-#         self.attr_a = attr_a
-        
-#     def method(self) -> None:
-#         print(f"Метод класса A: {self.attr}")
-
-# class B(A):
-#     def __init__(self, attr_b: str) -> None:
-#         self.attr_b = attr_b
-
-#     def method(self) -> None:
-#         print(f"Метод класса B: {self.attr_b}")
-        
-# class C(A, B):
-#     def __init__(self, attr_a: str, attr_b: str, attr_c: str) -> None:
-#         A.__init__(self, attr_a)
-#         B.__init__(self, attr_b)
-#         self.attr_c = attr_c
+c.method_b()
+c.method_c()
