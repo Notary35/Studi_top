@@ -5,91 +5,43 @@
 - Вызов метода наследника через родителя
 """
 
-from abc import ABC, abstractmethod
+# Цепочка наследования A - B - C
+# Альтернативный вариант
+# Много минусов. 
 
+class A:
+    def method_a(self) -> None:
+        print("Метод класса A")
+        print()
 
-class AbstractDocument(ABC):
-    def __init__(self, file_path: str) -> None:
-        self.file_path = file_path
-        self.file = self.open()
-    
-    @abstractmethod
-    def open(self):
-        pass
+class B:
+    def method_a(self) -> None:
+        print("Метод A в классе B")
+        print()
+class C(A, B):
+    pass
 
-    @abstractmethod
-    def read(self):
-        pass
+c = C()
+c.method_a()
 
-    @abstractmethod
-    def append(self):
-        pass
-    
-    @abstractmethod
-    def write(self):
-        pass
-
-    def __str__(self) -> str:
-        return f"{self.__class__.__name__} - {self.file_path}"
-    
-
-class TxtDocument(AbstractDocument):
-    def __init__(self, file_path: str) -> None:
-        super().__init__(file_path)
-
-    def open(self):
-        with open(self.file_path, "r", encoding="utf-8") as file:
-            return file.read()
+print(C.mro()) 
         
-    def read(self):
-        pass
+# class A:
+#     def __init__(self, attr_a: str) -> None:
+#         self.attr_a = attr_a
+        
+#     def method(self) -> None:
+#         print(f"Метод класса A: {self.attr}")
 
-    def append(self):
-        pass
+# class B(A):
+#     def __init__(self, attr_b: str) -> None:
+#         self.attr_b = attr_b
 
-    def write(self):
-        pass
-
-
-class MarkdownDocument(AbstractDocument):
-    def __init__(self, file_path: str) -> None:
-        super().__init__(file_path)
-
-    def open(self):
-        pass
-    def read(self):
-        pass
-    def append(self):
-        pass
-    def write(self):
-        pass
-
-
-class PdfDocument(AbstractDocument):
-    def __init__(self, file_path: str) -> None:
-        super().__init__(file_path)
-
-    def open(self):
-        pass
-    def read(self):
-        pass
-    def append(self):
-        pass
-    def write(self):
-        pass
-
-
-# abstract = AbstractDocument() # Это не работает. Мы не можем создать экземпляр абстрактного класса
-md_file = MarkdownDocument("file.md")
-pdf_file = PdfDocument("file.pdf")
-
-print(md_file)
-print(pdf_file)
-
-# MarkdownDocument - file.md
-# PdfDocument - file.pdf
-
-
-file ="lesson14.txt"
-txt_file = TxtDocument(file)
-print(txt_file.file)
+#     def method(self) -> None:
+#         print(f"Метод класса B: {self.attr_b}")
+        
+# class C(A, B):
+#     def __init__(self, attr_a: str, attr_b: str, attr_c: str) -> None:
+#         A.__init__(self, attr_a)
+#         B.__init__(self, attr_b)
+#         self.attr_c = attr_c
