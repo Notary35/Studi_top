@@ -3,43 +3,57 @@
 Тема: ООП Ч5. Наследование. Множественное. Иерархическое. MRO. Урок: 20
 - Взаимозависимость классов
 - Вызов метода наследника через родителя
+- Пример иерархического наследования с вызовом инициализаторов предков и передачей атрибутов
+- Пример иерархического наследования с вызовом инициализаторов предков и передачей атрибутов через словарь и **kwargs
+- Множественное наследование
+- MRO - method resolution order - порядок разрешения методов
+- Mixin -
 """
 
-# Цепочка наследования A - B - C
-# Альтернативный вариант
-# Много минусов. 
 
-        
-class A:
-    def __init__(self, attr_a) -> None:
-        print("Инициализация класса A")
-        self.attr_a = attr_a
+class SwimMixin:
+    def swim(self):
+        return f"{self.__class__.__name__} по имени {self.name} плавает по воде"
 
-    def method_a(self):
-        print(f"Method A: {self.attr_a} ")
+class FlyMixin:
+    def fly(self):
+        return f"{self.__class__.__name__} по имени {self.name} летает в небе"
 
-
-class B:
-    def __init__(self, attr_b) -> None:
-        print("Инициализация класса B")
-        self.attr_b = attr_b
-
-    def method_b(self):
-        print(f"Method B: {self.attr_b}")
+class RunMixin:    
+    def run(self):
+        return f"{self.__class__.__name__} по имени {self.name} бегает по земле"
 
 
-class C(A, B):
-    def __init__(self, attr_a, attr_b, attr_c) -> None:
-        A.__init__(self, attr_a)
-        B.__init__(self, attr_b)
-        print("Инициализация класса C")
-        self.attr_c = attr_c
+# Базовый класс животного
+class Animal:
+    def __init__(self, name):
+        self.name = name
 
-    def method_c(self):
-        print(f"Method C: {self.attr_c}")
+    def eat(self):
+        return f"{self.name} кушает"
 
 
-c = C(1, 2, 3)
-c.method_a()
-c.method_b()
-c.method_c()
+class Duck(Animal, SwimMixin, FlyMixin):
+    def make_sound(self):
+        return "Кря-кря"
+
+
+class Cat(Animal, RunMixin):
+    def make_sound(self):
+        return "Мяу"
+
+
+class Penguin(Animal, SwimMixin, RunMixin):
+    def make_sound(self):
+        return "Хонк-хонк"
+
+
+scrooge = Duck("Скрудж")
+tom = Cat("Том")
+skipper = Penguin("Шкипер")
+
+print(scrooge.swim())
+print(scrooge.fly())
+print(tom.run())
+print(skipper.swim())
+print(skipper.run())
