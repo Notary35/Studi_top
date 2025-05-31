@@ -72,3 +72,34 @@ print(f'{a=}')
 
 # Проверим b
 print(f'{b=}')
+
+def func7():
+    a = 7
+    print(f'функция 7 {a=}')
+    
+    def built7():
+        nonlocal a
+        a = 77
+        print(f'встроенная функция 7 {a=}')
+    
+    built7()
+    print(f'функция 7 после вызова built7 {a=}')
+
+# Вызов функции 7
+func7()
+
+# Проверим a
+print(f'{a=}')
+
+def func8(a):
+    def inner8():
+        print(a)
+    return inner8
+
+func8(5)
+
+banan = print
+banan("Привет")
+
+foo = func8(10)
+foo()
