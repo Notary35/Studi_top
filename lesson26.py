@@ -65,3 +65,22 @@ banan("Привет!")
 # Вызов функции 8
 foo = fucn8("пирожок")
 foo()
+
+def counter(start_value: int) -> Callable[[], int]:
+    def step() -> int:
+        nonlocal start_value
+        start_value += 1
+        return start_value
+    return step
+
+# Создаём пару счетчиков с разными начальными значениями
+
+counter1 = counter(10)
+counter2 = counter(20)
+
+print(counter1())
+print(counter2())
+print(counter1())
+print(counter2())
+print(counter1())
+print(counter2())
