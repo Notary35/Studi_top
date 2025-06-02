@@ -35,52 +35,24 @@ Dict[str, list[Union[int, str]]] - словарь с ключами типа str
 """
 from typing import List, Dict, Set, Union, Tuple, Optional, Callable, Iterable, Any, Iterator
 
-list_num = [1, 2, 3, 4, 5]
 
-def func(num: List[int]) -> None:
-    print(num)
+def cach_sorter() -> Callable[[list[str]], list[str]]:
+    cach = []
+    last_input = []
+    def sorter(data: list[str]) -> list[str]:
+        nonlocal cach, last_input
+        if data != last_input:
+            print("Выполняется сортировка")
+            cach = sorted(data)
+            last_input = data.copy()
+            return cach
+        print("Выполняется кэш")
+        return cach
+    return sorter
 
-func(list_num)
+sorter = cach_sorter()
+shop_list = ["Айфон", "Айпад", "Макбук", "Пирожок"]
 
-class MyClass:
-    pass
-
-cl: MyClass = MyClass()
-
-def alpha_func(a: Callable[[List[int]], None]) -> None:
-    pass
-alpha_func(func)
-
-
-def fucn8(a):
-    # a - хранится тут
-    def inner8():
-        # a - используется тут
-        print(a)
-    return inner8
-
-banan = print
-banan("Привет!")
-
-# Вызов функции 8
-foo = fucn8("пирожок")
-foo()
-
-def counter(start_value: int) -> Callable[[], int]:
-    def step() -> int:
-        nonlocal start_value
-        start_value += 1
-        return start_value
-    return step
-
-# Создаём пару счетчиков с разными начальными значениями
-
-counter1 = counter(10)
-counter2 = counter(20)
-
-print(counter1())
-print(counter2())
-print(counter1())
-print(counter2())
-print(counter1())
-print(counter2())
+print(sorter(shop_list))
+shop_list.append("PS5")
+print(sorter(shop_list))
