@@ -36,23 +36,78 @@ Dict[str, list[Union[int, str]]] - словарь с ключами типа str
 from typing import List, Dict, Set, Union, Tuple, Optional, Callable, Iterable, Any, Iterator
 
 
-def cach_sorter() -> Callable[[list[str]], list[str]]:
-    cach = []
-    last_input = []
-    def sorter(data: list[str]) -> list[str]:
-        nonlocal cach, last_input
-        if data != last_input:
-            print("Выполняется сортировка")
-            cach = sorted(data)
-            last_input = data.copy()
-            return cach
-        print("Выполняется кэш")
-        return cach
-    return sorter
+# def decorator_1(func: Callable) -> None:
+#     def wrapper():
+#         print("До вызова функции")
+#         func()
+#         print("После вызова функции")
 
-sorter = cach_sorter()
-shop_list = ["Айфон", "Айпад", "Макбук", "Пирожок"]
+#     return wrapper
 
-print(sorter(shop_list))
-shop_list.append("PS5")
-print(sorter(shop_list))
+# def print_hello():
+#     print("Hello")
+
+# def print_goodbye():
+#     print("Goodbye")
+
+# print_hello_decorated = decorator_1(print_hello)
+
+# print_goodbye_decorated = decorator_1(print_goodbye)
+
+# print_hello_decorated()
+# print_goodbye_decorated()
+
+# def decorator_2(func: Callable[[str], str]) -> Callable[[str], str]:
+#     def wrapper(s: str) -> str:
+#         print("До вызова функции")
+#         result = func(s)
+#         print("После вызова функции")
+#         return result
+
+#     return wrapper
+
+# def print_hello_2(s: str) -> str:
+#     return f"Hello, {s}"
+
+# print_hello_2_decorated = decorator_2(print_hello_2)
+
+# print(print_hello_2_decorated("Иосиф"))
+
+# @decorator_2
+# def print_goodbye_2(s: str) -> str:
+#     return f"Goodbye, {s}"
+
+# print(print_goodbye_2("Иосиф"))
+
+# def decorator_3(func: Callable[[str], str]) -> Callable[[str], str]:
+#     def wrapper(*args, **kwargs):
+#         print("Что то делаем ДО вызова функции")
+#         result = func(*args, **kwargs)
+#         print("Что то делаем ПОСЛЕ вызова функции")
+#         return result
+
+#     return wrapper
+
+# @decorator_3
+# def print_hello_3(name: str, age: int) -> str:
+#     return f"Hello, {name} {age}"
+
+# print(print_hello_3("Иосиф", 30))
+# print(print_hello_3(name="Иосиф", age=30))
+
+def check_length(length: int = 10) -> Callable:
+    def decorator(func: Callable) -> Callable:
+        def wrapper(name: str):
+            if len(name) > length:
+                return f"Имя {name} слишком длинное"
+            else:
+                return func(name)
+        
+        return wrapper
+    return decorator
+@check_length()
+def say_my_name(name: str) -> str:
+    return (f"Меня зовут {name}")
+
+print(say_my_name("Иосиф"))
+print(say_my_name("Иосиф Иосифович"))
