@@ -16,8 +16,9 @@ my_list = ["Банан", "Яблоко", "Апельсин"]
 # filter()
 # zip()
 
-MIN_VALUE = 0
-MAX_VALUE = 1000
+MIN_VALUE = 1
+MAX_VALUE = 100000
+
 my_range = list(range(MIN_VALUE, MAX_VALUE + 1))
 
 # обработка через filter()
@@ -29,8 +30,30 @@ strings = map(lambda num: str(num) + " число", even_nums)
 # pprint(list(strings))
 # pprint(list(map(lambda num: str(num) + " число", filter(lambda num: num % 2 == 0, range(MIN_VALUE, MAX_VALUE + 1)))))
 
-for num in strings:
-    print(num)
-    sleep(0.01)
+Stop_Item = "10000 число"
 
+# with open("nums.txt", "w", encoding="utf-8") as file:
+#     for num in strings:
+#         if num == Stop_Item:
+#             break
+#         file.write(num + "\n")
 
+SEARCH_STRING = "9982"
+
+# with open("nums.txt", "r", encoding="utf-8") as file:
+#     for num in file:
+#         if SEARCH_STRING in num:
+#             print(num)
+#             break
+
+from typing import Any, Generator
+
+def my_generator(start: int, stop: int) -> Generator[int]:
+    for i in range(start, stop):
+        yield i
+
+gen = my_generator(0, 2)
+
+print(next(gen))
+print(next(gen))
+print(next(gen))
