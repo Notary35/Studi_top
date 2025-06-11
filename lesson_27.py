@@ -56,4 +56,35 @@ gen = my_generator(0, 2)
 
 print(next(gen))
 print(next(gen))
+# print(next(gen))
+
+# Расширенный вариант генераторной функции
+
+def advanced_generator(start: int, stop: int) -> Generator[int, str|None, float]:
+    current = start
+    while current < stop:
+        command = yield current
+        
+        if command == "double":
+            current *= 2
+        elif command == "square":
+            current **= 2
+        elif command == "cube":
+            current **= 3
+        else:
+            current += 1
+
+    return float(current)
+
+gen = advanced_generator(0, 1000)
+
+gen.send(None)
 print(next(gen))
+print(next(gen))
+print(next(gen))
+print(next(gen))
+gen.send("double")
+gen.send("cube")
+
+for num in gen:
+    print(num)
