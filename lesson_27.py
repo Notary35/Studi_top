@@ -39,4 +39,4 @@ class CoctailGenerator:
 coctail_gen = CoctailGenerator(fruit_list)
 
 for coctail in coctail_gen:
-    print(coctail)
+    print(coctail)  

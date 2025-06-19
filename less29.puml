@@ -1,0 +1,11 @@
+@startuml
+autoactivate on
+alice -> bob : старт
+bob -> bob : собственный старт
+bill -> bob #005500 : старт другого потока
+bob -> george ** : создание
+return финиш другого потока
+return собственный финиш
+bob -> george !! : удаление
+return финиш
+@enduml
